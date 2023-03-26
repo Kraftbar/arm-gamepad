@@ -16,7 +16,7 @@ def init():
     return arm, speed
 
 def pd_controller(error, last_error, Kp=1, Kd=1, dt=1):
-    error = np.array(error)
+    #error = np.array(error)
     last_error = np.array(last_error)
 
     derivative = (error - last_error) / dt
@@ -36,10 +36,9 @@ def main():
         if not controller_data:
             break
         _, servo = arm.get_servo_angle()
-        print(type(servo))
-        print(type(controller_data))
-        print(type(last_error))
-        output, error = pd_controller(servo - controller_data, last_error)
+        servo_np = np.array(servo)
+        controller_data_np = np.array(controller_data)
+        output, error = pd_controller(servo_np - controller_data_np, last_error)
         last_error = error
         arm.vc_set_joint_velocity(output.tolist())
 
