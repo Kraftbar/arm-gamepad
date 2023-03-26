@@ -1,7 +1,10 @@
 # nc -l 12345 | python3 joystick_reader.py
+# Expects example stdin "[0.12, 12.35, -9.88, 25.79, -10.11, 4.57]"
+
 from xarm.wrapper import XArmAPI
 import numpy as np
 import sys
+import ast 
 
 def init():
     arm = XArmAPI('192.168.1.158')
@@ -25,7 +28,8 @@ def main():
     error = [0, 0, 0, 0, 0, 0]
     last_error = [0, 0, 0, 0, 0, 0]
     for controller_data_str in sys.stdin:
-        controller_data = [float(x) for x in controller_data_str.split()]
+        controller_data_str = controller_data_str.strip('[]').split(', ')
+        controller_data = [float(value) for value in controller_data_str]
         if not controller_data:
             break
         _, servo = arm.get_servo_angle()
