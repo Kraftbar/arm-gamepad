@@ -25,8 +25,8 @@ def pd_controller(error, last_error, Kp=1, Kd=1, dt=1):
 
 def main():
     arm, speed = init()
-    error = [0, 0, 0, 0, 0, 0]
-    last_error = [0, 0, 0, 0, 0, 0]
+    error = [0, 0, 0, 0, 0, 0 , 0]
+    last_error = [0, 0, 0, 0, 0, 0 ,0]
     for controller_data_str in sys.stdin:
         print(controller_data_str)
         print("asdadasda")

@@ -6,7 +6,7 @@ IP = '89.9.145.109'  # Replace with the desired IP address
 PORT = 12345
 scale = 700
 val = 12
-controller_data = [0, 0, 0, 0, 0, 0]
+controller_data = [0, 0, 0, 0, 0, 0, 0]
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
