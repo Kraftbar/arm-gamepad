@@ -28,6 +28,9 @@ def main():
     error = [0, 0, 0, 0, 0, 0]
     last_error = [0, 0, 0, 0, 0, 0]
     for controller_data_str in sys.stdin:
+        print(controller_data_str)
+        print("asdadasda")
+        controller_data_str=controller_data_str.strip()
         controller_data_str = controller_data_str.strip('[]').split(', ')
         controller_data = [float(value) for value in controller_data_str]
         if not controller_data:
