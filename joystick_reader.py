@@ -36,8 +36,11 @@ def main():
         if not controller_data:
             break
         _, servo = arm.get_servo_angle()
+
         servo_np = np.array(servo)
         controller_data_np = np.array(controller_data)
+        print(servo_np)
+        print(controller_data_np)
         output, error = pd_controller(servo_np - controller_data_np, last_error)
         last_error = error
         arm.vc_set_joint_velocity(output.tolist())
