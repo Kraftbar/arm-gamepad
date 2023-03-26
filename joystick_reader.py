@@ -1,4 +1,4 @@
-# nc -l 12345 | python3 joystick_reader.py
+# nc -l -u 12345 | python3 joystick_reader.py
 # Expects example stdin "[0.12, 12.35, -9.88, 25.79, -10.11, 4.57]"
 
 from xarm.wrapper import XArmAPI
@@ -15,13 +15,7 @@ def init():
     speed = 10
     return arm, speed
 
-def pd_controller(error, last_error, Kp=1, Kd=1, dt=1):
-    #error = np.array(error)
-    last_error = np.array(last_error)
 
-    derivative = (error - last_error) / dt
-    output = Kp * error + Kd * derivative
-    return output, error
 
 def main():
     arm, speed = init()
@@ -39,12 +33,8 @@ def main():
             break
         _, servo = arm.get_servo_angle()
 
-        servo_np = np.array(servo)
-        controller_data_np = np.array(controller_data)
-        print(servo_np)
-        print(controller_data_np)
-        output, error = pd_controller(servo_np - controller_data_np, last_error)
-        last_error = error
+
+
 
 if __name__ == "__main__":
     main()
