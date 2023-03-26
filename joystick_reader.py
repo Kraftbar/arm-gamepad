@@ -1,4 +1,4 @@
-# python3 joystick_reader.py | nc localhost 12345
+# nc -l 12345 | python3 joystick_reader.py
 from xarm.wrapper import XArmAPI
 import numpy as np
 import sys

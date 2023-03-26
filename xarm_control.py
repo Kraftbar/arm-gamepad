@@ -1,3 +1,19 @@
+import os
+from inputs import get_gamepad
+
+while True:
+    events = get_gamepad()
+    for event in events:
+        if ("ABS_X"==event.code):
+            offset=event.state/700
+            print("offset"+str(offset))
+
+
+
+
+
+exit()
+
 # nc -l 12345 | python3 xarm_control.py
 import os
 import struct
