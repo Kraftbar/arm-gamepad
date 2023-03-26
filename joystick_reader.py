@@ -12,7 +12,7 @@ def init():
     arm.motion_enable(enable=True)
     arm.set_mode(4)
     arm.set_state(state=0)
-    speed = 70
+    speed = 10
     return arm, speed
 
 def pd_controller(error, last_error, Kp=1, Kd=1, dt=1):
@@ -33,6 +33,8 @@ def main():
         controller_data_str=controller_data_str.strip()
         controller_data_str = controller_data_str.strip('[]').split(', ')
         controller_data = [float(value) for value in controller_data_str]
+        arm.vc_set_joint_velocity(controller_data)
+
         if not controller_data:
             break
         _, servo = arm.get_servo_angle()
@@ -43,7 +45,6 @@ def main():
         print(controller_data_np)
         output, error = pd_controller(servo_np - controller_data_np, last_error)
         last_error = error
-        arm.vc_set_joint_velocity(output.tolist())
 
 if __name__ == "__main__":
     main()
