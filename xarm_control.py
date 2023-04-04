@@ -24,13 +24,13 @@ try:
             if "ABS_RY" == event.code:
                 controller_data[2] = -event.state / scale
             if event.code == "BTN_SOUTH":  # Check for "A" button press
-                controller_data[7] = event.state
+                controller_data[7] = event.state*100
 
 
 
 
-        controller_data[:6] = [round(value, 2) for value in controller_data[:6]]
-        controller_data[:6] = [0 if (value < val and value > -val) else value for value in controller_data[:6]]
+        controller_data = [round(value, 2) for value in controller_data]
+        controller_data = [0 if (value < val and value > -val) else value for value in controller_data]
         print(controller_data)
 
         # Convert the controller_data list to a string, so it can be sent over UDP

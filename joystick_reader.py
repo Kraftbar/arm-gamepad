@@ -21,14 +21,13 @@ def main():
     arm, speed = init()
     for controller_data_str in sys.stdin:
         print(controller_data_str)
-        print("asdadasda")
         controller_data_str=controller_data_str.strip()
         controller_data_str = controller_data_str.strip('[]').split(', ')
         controller_data = [float(value) for value in controller_data_str]
         arm.vc_set_joint_velocity(controller_data[:6])
-        if controller_data[7] == 1:
+        if controller_data[7] == 100:
             arm.set_gripper_position(500)  # Close the gripper (0-850)
-
+        print(controller_data[7])
         if not controller_data:
             break
         _, servo = arm.get_servo_angle()
