@@ -26,7 +26,7 @@ def main():
         controller_data_str = controller_data_str.strip('[]').split(', ')
         controller_data = [float(value) for value in controller_data_str]
         arm.vc_set_joint_velocity(controller_data[:7])
-        if vc_set_joint_velocity[7] == 1:
+        if controller_data[7] == 1:
             arm.set_gripper_position(500)  # Close the gripper (0-850)
 
         if not controller_data:
