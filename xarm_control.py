@@ -29,8 +29,8 @@ try:
 
 
 
-        controller_data = [round(value, 2) for value in controller_data]
-        controller_data = [0 if (value < val and value > -val) else value for value in controller_data]
+        controller_data[:6] = [round(value, 2) for value in controller_data[:6]]
+        controller_data[:6] = [0 if (value < val and value > -val) else value for value in controller_data[:6]]
         print(controller_data)
 
         # Convert the controller_data list to a string, so it can be sent over UDP
