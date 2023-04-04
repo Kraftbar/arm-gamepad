@@ -19,15 +19,15 @@ def init():
 
 def main():
     arm, speed = init()
-    error = [0, 0, 0, 0, 0, 0 , 0]
-    last_error = [0, 0, 0, 0, 0, 0 ,0]
     for controller_data_str in sys.stdin:
         print(controller_data_str)
         print("asdadasda")
         controller_data_str=controller_data_str.strip()
         controller_data_str = controller_data_str.strip('[]').split(', ')
         controller_data = [float(value) for value in controller_data_str]
-        arm.vc_set_joint_velocity(controller_data)
+        arm.vc_set_joint_velocity(controller_data[:7]]
+        if vc_set_joint_velocity[7] == 1:
+            arm.set_gripper_position(500)  # Close the gripper (0-850)
 
         if not controller_data:
             break
