@@ -19,10 +19,6 @@ def init():
 def toggleGripper(arm,gripperClosedFlag):
     print(" test")
     print(gripperClosedFlag)
-    if(not gripperClosedFlag):
-        arm.close_lite6_gripper()
-        time.sleep(5)
-        gripperClosedFlag=1
 
 
     if(gripperClosedFlag):
@@ -30,6 +26,11 @@ def toggleGripper(arm,gripperClosedFlag):
         time.sleep(5)
         arm._arm.stop_lite6_gripper()
         gripperClosedFlag=0
+    else:
+        arm.close_lite6_gripper()
+        time.sleep(5)
+        gripperClosedFlag=1
+
     return gripperClosedFlag
 
 def main():
