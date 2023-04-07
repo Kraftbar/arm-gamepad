@@ -6,7 +6,6 @@ import numpy as np
 import sys
 import ast 
 import time
-gripperClosedFlag=0
 
 def init():
     arm = XArmAPI('192.168.1.158')
@@ -38,7 +37,7 @@ def main():
         controller_data = [float(value) for value in controller_data_str]
         arm.vc_set_joint_velocity(controller_data[:6])
         if controller_data[7] == 100:
-            toggleGripper(500)  # Close the gripper (0-850)
+            toggleGripper(arm)  # Close the gripper (0-850)
         print(controller_data[7])
         if not controller_data:
             break
