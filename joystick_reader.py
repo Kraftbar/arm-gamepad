@@ -21,6 +21,7 @@ def toggleGripper(arm,gripperClosedFlag):
     print(gripperClosedFlag)
     if(not gripperClosedFlag):
         arm.close_lite6_gripper()
+        time.sleep(5)
         gripperClosedFlag=1
 
 
