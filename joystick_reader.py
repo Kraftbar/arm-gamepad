@@ -17,7 +17,7 @@ def init():
     return arm, speed
 
 def toggleGripper(arm,gripperClosedFlag):
-    if(gripperClosedFlag):
+    if(not gripperClosedFlag):
         arm.close_lite6_gripper()
         gripperClosedFlag=1
 
