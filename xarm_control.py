@@ -21,8 +21,6 @@ try:
                 controller_data[0] = -event.state / scale
             if "ABS_Y" == event.code:
                 controller_data[1] = event.state / scale
-            if "ABS_RX" == event.code:
-                controller_data[0] = -event.state / scale
             if "ABS_RY" == event.code:
                 controller_data[2] = -event.state / scale
             if event.code == "BTN_SOUTH":  # Check for "A" button press
