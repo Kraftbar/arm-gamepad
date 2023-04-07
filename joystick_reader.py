@@ -15,8 +15,8 @@ def init():
     arm.set_state(state=0)
     speed = 10
     return arm, speed
-global gripperClosedFlag=0
-def toggleGripper(arm):
+
+def toggleGripper(arm,gripperClosedFlag):
     if(gripperClosedFlag):
         arm.close_lite6_gripper()
         gripperClosedFlag=1
@@ -26,10 +26,11 @@ def toggleGripper(arm):
         time.sleep(0.5)
         arm._arm.stop_lite6_gripper()
         gripperClosedFlag=0
-
+    return gripperClosedFlag
 
 def main():
     arm, speed = init()
+    gripperClosedFlag=0
     for controller_data_str in sys.stdin:
         print(controller_data_str)
         controller_data_str=controller_data_str.strip()
@@ -37,7 +38,7 @@ def main():
         controller_data = [float(value) for value in controller_data_str]
         arm.vc_set_joint_velocity(controller_data[:6])
         if controller_data[7] == 100:
-            toggleGripper(arm)  # Close the gripper (0-850)
+            gripperClosedFlag=toggleGripper(arm,gripperClosedFlag)  # Close the gripper (0-850)
         print(controller_data[7])
         if not controller_data:
             break
