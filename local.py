@@ -19,19 +19,19 @@ arm, speed = init()
 
 while True:
     events = get_gamepad()
+
+    arm.vc_set_joint_velocity(controller_data)
+
+
     for event in events:
         if "ABS_X" == event.code:
-            controller_data[0] = event.state / scale
+            controller_data[0] = -event.state / scale
         if "ABS_Y" == event.code:
             controller_data[1] = event.state / scale
-        if "ABS_RX" == event.code:
-            controller_data[2] = event.state / scale
-        if "ABS_RY" == event.code:
-            controller_data[3] = event.state / scale
+        if "ABS_RY" == event.code :
+            controller_data[2] = -event.state / scale
 
     controller_data = [round(value, 2) for value in controller_data]
     controller_data = [0 if (value < val and value > -val) else value for value in controller_data]
 
-
-    arm.vc_set_joint_velocity(controller_data)
 

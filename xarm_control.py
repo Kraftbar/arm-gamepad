@@ -8,6 +8,7 @@ scale = 700
 val = 12
 controller_data = [0, 0, 0, 0, 0, 0, 0, 0]
 a_button_state=0
+event_code=""
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 
@@ -15,6 +16,7 @@ try:
     while True:
         events = get_gamepad()
         for event in events:
+            eventCode=event.code
             if "ABS_X" == event.code:
                 controller_data[0] = -event.state / scale
             if "ABS_Y" == event.code:
@@ -26,8 +28,10 @@ try:
             if event.code == "BTN_SOUTH":  # Check for "A" button press
                 controller_data[7] = event.state*100
 
+        if "SYN_REPORT"== event.code: 
+            continue
 
-
+        print(eventCode)
 
         controller_data = [round(value, 2) for value in controller_data]
         controller_data = [0 if (value < val and value > -val) else value for value in controller_data]
