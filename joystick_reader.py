@@ -17,7 +17,7 @@ def init():
     arm.motion_enable(enable=True)
     arm.set_mode(4)
     arm.set_state(state=0)
-    speed = 10
+    speed = 80
     return arm, speed
 
 def toggleGripper(arm,gripperClosedFlag):
