@@ -62,7 +62,7 @@ def main():
     arm, speed = init()
     gripperClosedFlag=0
     controller_data_history = deque([[0 for _ in range(12)] for _ in range(4)], maxlen=4)
-    pool = Pool(processes=1)             
+    pool = Pool(processes=2)             
     worker = None
 
     for controller_data_str in sys.stdin:
@@ -73,7 +73,7 @@ def main():
         arm.vc_set_joint_velocity(controller_data[:6])
         controller_data_history.append(controller_data)  
 
-        if controller_data_history[2][7] == 100 and controller_data_history[3][7] == 0 :
+        if controller_data_history[2][7] == 0 and controller_data_history[3][7] == 100 :
             print("aaaaaaaaaaaaaaaaaa")
             worker = pool.apply_async(toggleGripper, args=(arm, gripperClosedFlag)) 
             gripperClosedFlag = 1 - gripperClosedFlag
