@@ -70,7 +70,7 @@ if __name__ == "__main__":
 
         if controller_data_history[2][7] == 0 and controller_data_history[3][7] == 100 :
             print("aaaaaaaaaaaaaaaaaa")
-            worker = pool.apply_async(toggleGripper, args=(arm, gripperClosedFlag)) 
+            toggleGripper(arm, gripperClosedFlag) 
             gripperClosedFlag = 1 - gripperClosedFlag
         if controller_data[8] == 100:
             clearError(arm)
