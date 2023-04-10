@@ -53,7 +53,7 @@ def setInitialState(arm,speed):
         time.sleep(0.05)
 
 
-def main():
+if __name__ == "__main__":
     arm, speed = init()
     gripperClosedFlag=0
     controller_data_history = deque([[0 for _ in range(12)] for _ in range(4)], maxlen=4)
@@ -82,5 +82,3 @@ def main():
         _, servo = arm.get_servo_angle()
 
 
-if __name__ == "__main__":
-    main()
