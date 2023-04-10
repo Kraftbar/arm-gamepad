@@ -25,7 +25,10 @@ def init():
 
 def clearError(arm):
     arm.clean_error()
-
+    arm.set_mode(4)
+    arm.set_state(state=0)
+    while (arm.mode !=  4):
+        time.sleep(0.05)
 
 def toggleGripper(arm,gripperClosedFlag):
     # check if already done
