@@ -48,6 +48,7 @@ def toggleGripper(arm,gripperClosedFlag):
 
 def setInitialState(arm,speed):
     arm.set_mode(0)
+    print("asdadmaksjndjkandlkjnsaljknaslkjfnsdlkjn")
     arm.set_state(state=0)
     while (arm.mode !=  0):
         time.sleep(0.05)
