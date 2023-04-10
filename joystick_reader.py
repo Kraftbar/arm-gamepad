@@ -72,7 +72,7 @@ def main():
         controller_data_history.append(controller_data)  
         #last_four_col7 = [data[7] for data in list(controller_data_history)[-4:]]
 
-        if controller_data_history[0][7] == 100 and controller_data_history[1][7] == 0:
+        if controller_data_history[2][7] == 100 and controller_data_history[3][7] == 0:
             gripperClosedFlag=toggleGripper(arm,gripperClosedFlag)  
         if controller_data[8] == 100:
             clearError(arm)
