@@ -7,6 +7,8 @@ import sys
 import ast 
 import time
 import threading
+import asyncio
+
 from collections import deque
 # Y:   J2, J3, J5 
 # X:   J1 
@@ -31,11 +33,11 @@ def clearError(arm):
     while (arm.mode !=  4):
         time.sleep(0.05)
 
-def toggleGripper(arm,gripperClosedFlag):
+async def toggleGripper(arm,gripperClosedFlag):
     
     if(gripperClosedFlag):
         arm.open_lite6_gripper()
-        time.sleep(3)
+        await asyncio.sleep(1)
         arm._arm.stop_lite6_gripper()
         gripperClosedFlag=0
     else:
