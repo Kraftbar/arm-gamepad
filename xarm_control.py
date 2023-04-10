@@ -2,7 +2,7 @@ import socket
 from inputs import get_gamepad
 import time
 
-IP = '89.9.145.183'  # Replace with the desired IP address
+IP = '89.9.172.7' 
 PORT = 12345
 scale = 700
 val = 12
@@ -15,6 +15,7 @@ sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 try:
     while True:
         events = get_gamepad()
+
         for event in events:
             eventCode=event.code
             if "ABS_X" == event.code:

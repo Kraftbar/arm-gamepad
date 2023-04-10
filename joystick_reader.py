@@ -6,6 +6,10 @@ import numpy as np
 import sys
 import ast 
 import time
+# Y:   J2, J3, J5 
+# X:   J1 
+# rot: J4, J6
+
 
 def init():
     arm = XArmAPI('192.168.1.158')
@@ -17,10 +21,6 @@ def init():
     return arm, speed
 
 def toggleGripper(arm,gripperClosedFlag):
-    print(" test")
-    print(gripperClosedFlag)
-
-
     if(gripperClosedFlag):
         arm.open_lite6_gripper()
         time.sleep(5)
@@ -28,10 +28,17 @@ def toggleGripper(arm,gripperClosedFlag):
         gripperClosedFlag=0
     else:
         arm.close_lite6_gripper()
-        time.sleep(5)
         gripperClosedFlag=1
-
     return gripperClosedFlag
+
+
+def setInitialState(arm,speed):
+    arm.set_mode(0)
+    arm.set_state(state=0)
+    while (arm.mode is not  0):
+        time.sleep(0.05)
+    de = arm.set_servo_angle(angle=arm.get_initial_point()[1], speed=speed,radius=60,  wait=True)
+
 
 def main():
     arm, speed = init()

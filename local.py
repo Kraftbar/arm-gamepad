@@ -4,18 +4,39 @@ import time
 
 def init():
     arm = XArmAPI('192.168.1.158')
-    print(arm.get_state())
-    arm.motion_enable(enable=True)
-    arm.set_mode(4)
-    arm.set_state(state=0)
+    print()
+
     speed = 70
     return arm, speed
 
 scale = 700
 val = 12
-controller_data = [0, 0, 0, 0, 0, 0, 0]
+asdsad = [0.0, 10, 32, 0.0, 22, 0.0, 0.0]
+lskdfldskmflkm=      [-8,-24, 64, 23, 30, -16, 0]
 
 arm, speed = init()
+
+
+
+
+print(arm.get_state())
+
+arm.set_mode(0)
+arm.set_state(state=0)
+while (arm.mode is  4):
+    time.sleep(0.05)
+    print(arm.mode)
+print(arm.get_state())
+de = arm.set_servo_angle(angle=arm.get_initial_point()[1], speed=speed,radius=60,  wait=True)
+
+print("--------")
+arm.set_mode(4)
+time.sleep(0.1)
+
+arm.set_state(state=0)
+
+
+controller_data=[0,0,0,0,0,0,0]
 
 while True:
     events = get_gamepad()
