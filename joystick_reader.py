@@ -74,6 +74,7 @@ def main():
         controller_data_history.append(controller_data)  
 
         if controller_data_history[2][7] == 100 and controller_data_history[3][7] == 0 :
+            print("aaaaaaaaaaaaaaaaaa")
             worker = pool.apply_async(toggleGripper, args=(arm, gripperClosedFlag)) 
             gripperClosedFlag = 1 - gripperClosedFlag
         if controller_data[8] == 100:
