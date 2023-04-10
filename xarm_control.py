@@ -28,9 +28,9 @@ try:
                 controller_data[7] = event.state*100
             if event.code == "BTN_EAST":  
                 controller_data[8] = event.state*100
-            if event.code == "BTN_WEST":  
+            if event.code == "BTN_WEST":  # bug in lib
                 controller_data[9] = event.state*100
-            if event.code == "BTN_NORTH":  
+            if event.code == "BTN_NORTH": # bug in lib
                 controller_data[10] = event.state*100
             if event.code == "BTN_START":  
                 controller_data[11] = event.state*100

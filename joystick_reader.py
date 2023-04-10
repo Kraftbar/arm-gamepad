@@ -20,6 +20,12 @@ def init():
     arm.set_state(state=0)
     speed = 80
     return arm, speed
+    
+
+
+def clearError(arm):
+    arm.clean_error()
+
 
 def toggleGripper(arm,gripperClosedFlag):
     # check if already done
@@ -58,6 +64,8 @@ def main():
         arm.vc_set_joint_velocity(controller_data[:6])
         if controller_data[7] == 100:
             gripperClosedFlag=toggleGripper(arm,gripperClosedFlag)  
+        if controller_data[8] == 100:
+            clearError(arm)
         if controller_data[11] == 100:
             setInitialState(arm,speed)
         print(controller_data[7])

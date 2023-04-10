@@ -44,8 +44,7 @@ while True:
 
     arm.vc_set_joint_velocity(controller_data)
     
-    a=arm.get_gripper_position()
-    print(a)
+    
     for event in events:
         if "ABS_X" == event.code:
             controller_data[0] = -event.state / scale
