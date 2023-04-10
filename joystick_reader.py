@@ -80,5 +80,8 @@ if __name__ == "__main__":
         if not controller_data:
             break
         _, servo = arm.get_servo_angle()
+    result = worker.get()
 
+    pool.close()
+    pool.join() 
 
