@@ -36,7 +36,7 @@ def toggleGripper(arm,gripperClosedFlag):
 def setInitialState(arm,speed):
     arm.set_mode(0)
     arm.set_state(state=0)
-    while (arm.mode is not  0):
+    while (arm.mode !=  0):
         time.sleep(0.05)
     de = arm.set_servo_angle(angle=arm.get_initial_point()[1], speed=speed,radius=60,  wait=True)
 
