@@ -7,6 +7,7 @@ import sys
 import ast 
 import time
 import threading
+from collections import deque
 # Y:   J2, J3, J5 
 # X:   J1 
 # rot: J4, J6
@@ -31,12 +32,11 @@ def clearError(arm):
         time.sleep(0.05)
 
 def toggleGripper(arm,gripperClosedFlag):
-    # check if already done
-    # todo: can receive mulitple 100 at once fix 
+    
     if(gripperClosedFlag):
         arm.open_lite6_gripper()
-        timer = threading.Timer(2.0, arm._arm.stop_lite6_gripper(), args=())
-        timer.start()
+        time.sleep(3)
+        arm._arm.stop_lite6_gripper()
         gripperClosedFlag=0
     else:
         arm.close_lite6_gripper()
@@ -59,13 +59,18 @@ def setInitialState(arm,speed):
 def main():
     arm, speed = init()
     gripperClosedFlag=0
+    controller_data_history = deque([[0 for _ in range(12)] for _ in range(4)], maxlen=4)
+
     for controller_data_str in sys.stdin:
         print(controller_data_str)
         controller_data_str=controller_data_str.strip()
         controller_data_str = controller_data_str.strip('[]').split(', ')
         controller_data = [float(value) for value in controller_data_str]
         arm.vc_set_joint_velocity(controller_data[:6])
-        if controller_data[7] == 100:
+        controller_data_history.append(controller_data)  
+        #last_four_col7 = [data[7] for data in list(controller_data_history)[-4:]]
+
+        if controller_data_history[0][7] == 100 and controller_data_history[1][7] == 0:
             gripperClosedFlag=toggleGripper(arm,gripperClosedFlag)  
         if controller_data[8] == 100:
             clearError(arm)
@@ -75,8 +80,6 @@ def main():
         if not controller_data:
             break
         _, servo = arm.get_servo_angle()
-
-
 
 
 if __name__ == "__main__":
