@@ -15,7 +15,6 @@ from collections import deque
 # X:   J1 
 # rot: J4, J6
 
-
 def init():
     arm = XArmAPI('192.168.1.158')
     print(arm.get_state())
@@ -24,8 +23,6 @@ def init():
     arm.set_state(state=0)
     speed = 80
     return arm, speed
-    
-
 
 def clearError(arm):
     arm.clean_error()
@@ -40,11 +37,9 @@ def toggleGripper(arm,gripperClosedFlag):
         arm.open_lite6_gripper()
         time.sleep(3)
         arm._arm.stop_lite6_gripper()
-
     else:
         arm.close_lite6_gripper()
         time.sleep(3)
-
 
 def setInitialState(arm,speed):
     arm.set_mode(0)

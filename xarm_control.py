@@ -42,7 +42,6 @@ try:
         if "SYN_REPORT"== event.code: 
             continue
 
-
         controller_data = [round(value, 2) for value in controller_data]
         controller_data = [0 if (value < val and value > -val) else value for value in controller_data]
         print(controller_data)
