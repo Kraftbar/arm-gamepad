@@ -21,6 +21,7 @@ def init():
     return arm, speed
 
 def toggleGripper(arm,gripperClosedFlag):
+    # check if already done.
     if(gripperClosedFlag):
         arm.open_lite6_gripper()
         time.sleep(5)
@@ -50,7 +51,9 @@ def main():
         controller_data = [float(value) for value in controller_data_str]
         arm.vc_set_joint_velocity(controller_data[:6])
         if controller_data[7] == 100:
-            gripperClosedFlag=toggleGripper(arm,gripperClosedFlag)  # Close the gripper (0-850)
+            gripperClosedFlag=toggleGripper(arm,gripperClosedFlag)  
+        if controller_data[11] == 100:
+            setInitialState(arm,speed)
         print(controller_data[7])
         if not controller_data:
             break

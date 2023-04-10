@@ -6,7 +6,7 @@ IP = '89.9.172.7'
 PORT = 12345
 scale = 700
 val = 12
-controller_data = [0, 0, 0, 0, 0, 0, 0, 0]
+controller_data = [0] * 12
 a_button_state=0
 event_code=""
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -24,8 +24,16 @@ try:
                 controller_data[1] = event.state / scale
             if "ABS_RY" == event.code:
                 controller_data[2] = -event.state / scale
-            if event.code == "BTN_SOUTH":  # Check for "A" button press
+            if event.code == "BTN_SOUTH":  
                 controller_data[7] = event.state*100
+            if event.code == "BTN_EAST":  
+                controller_data[8] = event.state*100
+            if event.code == "BTN_WEST":  
+                controller_data[9] = event.state*100
+            if event.code == "BTN_NORTH":  
+                controller_data[10] = event.state*100
+            if event.code == "BTN_START":  
+                controller_data[11] = event.state*100
 
         if "SYN_REPORT"== event.code: 
             continue

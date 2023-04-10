@@ -26,6 +26,7 @@ arm.set_state(state=0)
 while (arm.mode is  4):
     time.sleep(0.05)
     print(arm.mode)
+    
 print(arm.get_state())
 de = arm.set_servo_angle(angle=arm.get_initial_point()[1], speed=speed,radius=60,  wait=True)
 
@@ -42,8 +43,9 @@ while True:
     events = get_gamepad()
 
     arm.vc_set_joint_velocity(controller_data)
-
-
+    
+    a=arm.get_gripper_position()
+    print(a)
     for event in events:
         if "ABS_X" == event.code:
             controller_data[0] = -event.state / scale
