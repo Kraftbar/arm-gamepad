@@ -33,11 +33,11 @@ def clearError(arm):
     while (arm.mode !=  4):
         time.sleep(0.05)
 
-async def toggleGripper(arm,gripperClosedFlag):
+def toggleGripper(arm,gripperClosedFlag):
     
     if(gripperClosedFlag):
         arm.open_lite6_gripper()
-        await asyncio.sleep(1)
+        time.sleep(3)
         arm._arm.stop_lite6_gripper()
         gripperClosedFlag=0
     else:
