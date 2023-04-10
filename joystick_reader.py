@@ -8,6 +8,7 @@ import ast
 import time
 import threading
 import asyncio
+from multiprocessing import Pool
 
 from collections import deque
 # Y:   J2, J3, J5 
@@ -39,11 +40,10 @@ def toggleGripper(arm,gripperClosedFlag):
         arm.open_lite6_gripper()
         time.sleep(3)
         arm._arm.stop_lite6_gripper()
-        gripperClosedFlag=0
+
     else:
         arm.close_lite6_gripper()
-        gripperClosedFlag=1
-    return gripperClosedFlag
+        time.sleep(3)
 
 
 def setInitialState(arm,speed):
@@ -62,6 +62,7 @@ def main():
     arm, speed = init()
     gripperClosedFlag=0
     controller_data_history = deque([[0 for _ in range(12)] for _ in range(4)], maxlen=4)
+    pool = Pool(processes=1)             
 
     for controller_data_str in sys.stdin:
         print(controller_data_str)
@@ -70,10 +71,11 @@ def main():
         controller_data = [float(value) for value in controller_data_str]
         arm.vc_set_joint_velocity(controller_data[:6])
         controller_data_history.append(controller_data)  
-        #last_four_col7 = [data[7] for data in list(controller_data_history)[-4:]]
 
-        if controller_data_history[2][7] == 100 and controller_data_history[3][7] == 0:
-            gripperClosedFlag=toggleGripper(arm,gripperClosedFlag)  
+
+        if controller_data_history[2][7] == 100 and controller_data_history[3][7] == 0 and worker.ready():
+            worker = pool.apply_async(gripperClosedFlag, args=(arm, gripperClosedFlag)) 
+            gripperClosedFlag = 1 - gripperClosedFlag
         if controller_data[8] == 100:
             clearError(arm)
         if controller_data[11] == 100:

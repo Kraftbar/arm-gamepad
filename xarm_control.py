@@ -17,13 +17,17 @@ try:
         events = get_gamepad()
 
         for event in events:
-            eventCode=event.code
+            print(event.state)
             if "ABS_X" == event.code:
                 controller_data[0] = -event.state / scale
             if "ABS_Y" == event.code:
                 controller_data[1] = event.state / scale
             if "ABS_RY" == event.code:
                 controller_data[2] = -event.state / scale
+            if "ABS_Z" == event.code:
+                controller_data[5] = (event.state)/2
+            if "ABS_RZ" == event.code:
+                controller_data[5] = -(event.state)/2
             if event.code == "BTN_SOUTH":  
                 controller_data[7] = event.state*100
             if event.code == "BTN_EAST":  
@@ -38,7 +42,6 @@ try:
         if "SYN_REPORT"== event.code: 
             continue
 
-        print(eventCode)
 
         controller_data = [round(value, 2) for value in controller_data]
         controller_data = [0 if (value < val and value > -val) else value for value in controller_data]
