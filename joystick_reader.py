@@ -57,7 +57,7 @@ def main():
     arm, speed = init()
     gripperClosedFlag=0
     controller_data_history = deque([[0 for _ in range(12)] for _ in range(4)], maxlen=4)
-    pool = Pool(processes=2)             
+    pool = Pool(processes=4)             
     worker = None
 
     for controller_data_str in sys.stdin:
