@@ -31,7 +31,7 @@ def clearError(arm):
     while (arm.mode !=  4):
         time.sleep(0.05)
 
-def toggleGripper(arm,gripperClosedFlag):
+def toggleGripper():
     print("asdadmaksjndjkandlkjnsaljknaslkjfnsdlkjn")
     if(gripperClosedFlag):
         arm.open_lite6_gripper()
@@ -70,7 +70,7 @@ if __name__ == "__main__":
 
         if controller_data_history[2][7] == 0 and controller_data_history[3][7] == 100 :
             print("aaaaaaaaaaaaaaaaaa")
-            toggleGripper(arm, gripperClosedFlag) 
+            worker = pool.apply_async(toggleGripper()) 
             gripperClosedFlag = 1 - gripperClosedFlag
         if controller_data[8] == 100:
             clearError(arm)
