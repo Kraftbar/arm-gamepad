@@ -6,6 +6,7 @@ import numpy as np
 import sys
 import ast 
 import time
+import threading
 # Y:   J2, J3, J5 
 # X:   J1 
 # rot: J4, J6
@@ -21,11 +22,12 @@ def init():
     return arm, speed
 
 def toggleGripper(arm,gripperClosedFlag):
-    # check if already done.
+    # check if already done
+    # todo: can receive mulitple 100 at once fix 
     if(gripperClosedFlag):
         arm.open_lite6_gripper()
-        time.sleep(5)
-        arm._arm.stop_lite6_gripper()
+        timer = threading.Timer(2.0, arm._arm.stop_lite6_gripper(), args=())
+        timer.start()
         gripperClosedFlag=0
     else:
         arm.close_lite6_gripper()
