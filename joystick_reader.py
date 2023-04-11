@@ -9,11 +9,13 @@ import time
 import threading
 import asyncio
 from multiprocessing import Pool
+import threading
 
 from collections import deque
 # Y:   J2, J3, J5 
 # X:   J1 
 # rot: J4, J6
+toggleGripper_finished = True
 
 def init():
     arm = XArmAPI('192.168.1.158')
@@ -31,15 +33,21 @@ def clearError(arm):
     while (arm.mode !=  4):
         time.sleep(0.05)
 
-def toggleGripper():
+def toggleGripper(arm, gripperClosedFlag):
     print("asdadmaksjndjkandlkjnsaljknaslkjfnsdlkjn")
     if(gripperClosedFlag):
         arm.open_lite6_gripper()
         time.sleep(3)
+        
         arm._arm.stop_lite6_gripper()
     else:
         arm.close_lite6_gripper()
-        time.sleep(3)
+
+def toggleGripperWrapper(arm, gripperClosedFlag):
+    global toggleGripper_finished
+    toggleGripper(arm, gripperClosedFlag)
+    toggleGripper_finished = True
+
 
 def setInitialState(arm,speed):
     arm.set_mode(0)
@@ -57,8 +65,6 @@ if __name__ == "__main__":
     arm, speed = init()
     gripperClosedFlag=0
     controller_data_history = deque([[0 for _ in range(12)] for _ in range(4)], maxlen=4)
-    pool = Pool(processes=4)             
-    worker = None
 
     for controller_data_str in sys.stdin:
         print(controller_data_str)
@@ -68,9 +74,11 @@ if __name__ == "__main__":
         arm.vc_set_joint_velocity(controller_data[:6])
         controller_data_history.append(controller_data)  
 
-        if controller_data_history[2][7] == 0 and controller_data_history[3][7] == 100 :
+        if controller_data_history[2][7] == 0 and controller_data_history[3][7] == 100 and (not toggleGripper_finished) :
+            toggleGripper_finished = False
             print("aaaaaaaaaaaaaaaaaa")
-            worker = pool.apply_async(toggleGripper, args=(arm, gripperClosedFlag))
+            fun1_thread = threading.Thread(target=toggleGripperWrapper, args=(arm, gripperClosedFlag,))
+            fun1_thread.start()
             gripperClosedFlag = 1 - gripperClosedFlag
         if controller_data[8] == 100:
             clearError(arm)
@@ -80,8 +88,6 @@ if __name__ == "__main__":
         if not controller_data:
             break
         _, servo = arm.get_servo_angle()
-    result = worker.get()
 
-    pool.close()
-    pool.join() 
+
 
