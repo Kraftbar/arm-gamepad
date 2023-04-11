@@ -89,5 +89,5 @@ if __name__ == "__main__":
             break
         _, servo = arm.get_servo_angle()
 
-
+    print("exited")
 
