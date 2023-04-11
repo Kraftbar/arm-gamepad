@@ -74,7 +74,7 @@ if __name__ == "__main__":
         arm.vc_set_joint_velocity(controller_data[:6])
         controller_data_history.append(controller_data)  
 
-        if controller_data_history[2][7] == 0 and controller_data_history[3][7] == 100 and (not toggleGripper_finished) :
+        if controller_data_history[2][7] == 0 and controller_data_history[3][7] == 100 and  toggleGripper_finished :
             toggleGripper_finished = False
             print("aaaaaaaaaaaaaaaaaa")
             fun1_thread = threading.Thread(target=toggleGripperWrapper, args=(arm, gripperClosedFlag,))
