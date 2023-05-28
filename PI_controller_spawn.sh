@@ -1,7 +1,7 @@
 #!/bin/bash
 # Add this script to ~/.profile with an "&"
 
-command_to_spawn="nc -l -u 12345 | python3 joystick_reader.py"
+command_to_spawn="python3 xarm_control.py"
 
 check_and_spawn_command() {
   if [ -e "/dev/input/js0" ]; then
@@ -9,7 +9,7 @@ check_and_spawn_command() {
     $command_to_spawn
   else
     echo "Device '/dev/input/js0' not found. Terminating script..."
-    exit 1
+
   fi
 }
 
@@ -26,7 +26,7 @@ while true; do
     fi
   else
     echo "Device '/dev/input/js0' not found. Terminating script..."
-    exit 1
+
   fi
 
   sleep 1  # Sleep for 1 second before the next check
