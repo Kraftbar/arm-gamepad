@@ -2,7 +2,7 @@ import socket
 from inputs import get_gamepad
 import time
 
-IP = '89.9.145.192' 
+IP = '89.9.145.2' 
 PORT = 12345
 scale = 700
 val = 12
@@ -11,6 +11,8 @@ a_button_state=0
 event_code=""
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+
+start_time = time.time()
 
 try:
     while True:
@@ -39,7 +41,15 @@ try:
             if event.code == "BTN_START":  
                 controller_data[11] = event.state*100
 
+
+        
+        if time.time() - start_time >= 30:
+                start_time = time.time()  
+                ret=sock.sendto(data_str.encode(), (IP, PORT))
+
+
         if "SYN_REPORT"== event.code: 
+
             continue
 
         controller_data = [round(value, 2) for value in controller_data]
@@ -49,8 +59,8 @@ try:
         # Convert the controller_data list to a string, so it can be sent over UDP
         data_str = str(controller_data) +'\n'
 
-        sock.sendto(data_str.encode(), (IP, PORT))
-
+        ret=sock.sendto(data_str.encode(), (IP, PORT))
+        print(ret)
 except KeyboardInterrupt:
     print("\nClosing socket and exiting...")
     sock.close()

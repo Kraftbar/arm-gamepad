@@ -34,7 +34,7 @@ def clearError(arm):
         time.sleep(0.05)
 
 def toggleGripper(arm, gripperClosedFlag):
-    print("asdadmaksjndjkandlkjnsaljknaslkjfnsdlkjn")
+    print("debug2")
     if(gripperClosedFlag):
         arm.open_lite6_gripper()
         time.sleep(3)
@@ -76,7 +76,7 @@ if __name__ == "__main__":
 
         if controller_data_history[2][7] == 0 and controller_data_history[3][7] == 100 and  toggleGripper_finished :
             toggleGripper_finished = False
-            print("aaaaaaaaaaaaaaaaaa")
+            print("debug3")
             fun1_thread = threading.Thread(target=toggleGripperWrapper, args=(arm, gripperClosedFlag,))
             fun1_thread.start()
             gripperClosedFlag = 1 - gripperClosedFlag
