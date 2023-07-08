@@ -1,6 +1,8 @@
 #!/bin/bash
 # Add this script to ~/.profile with an "&"
 
+# TODO: Check from bash when the arm is connected?
+
 command_to_spawn="python3 xarm-local.py"
 
 check_and_spawn_command() {
