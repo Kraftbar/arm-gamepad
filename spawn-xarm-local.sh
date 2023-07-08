@@ -1,35 +1,25 @@
 #!/bin/bash
 # Add this script to ~/.profile with an "&"
 
-# TODO: Check from bash when the arm is connected?
+# TODO: CHEK IF THE COMMAND PROSSES CRASHES IF THE ARM IS UNPLUGGED
 
-command_to_spawn="python3 xarm-local.py"
+command_to_spawn="nc -l -u 12345 | python3 joystick_reader.py"
+host="192.168.1.158"  
 
-check_and_spawn_command() {
-  if [ -e "/dev/input/js0" ]; then
-    echo "Device '/dev/input/js0' found. Spawning command..."
-    $command_to_spawn
-  else
-    echo "Device '/dev/input/js0' not found. Terminating script..."
 
-  fi
-}
-
-# Initial check and command spawn
-check_and_spawn_command
 
 while true; do
-  if [ -e "/dev/input/js0" ]; then
-    # File exists, check if command is running
+  ping -c 1 "$host" > /dev/null
+
+  if [ $? -eq 0 ]; then
     pid=$(pgrep -f "$command_to_spawn")
+    echo "Host is reachable. Spawning command..."
     if [ -z "$pid" ]; then
-      echo "Device '/dev/input/js0' found. Spawning command..."
       $command_to_spawn
     fi
   else
-    echo "Device '/dev/input/js0' not found. Terminating script..."
 
   fi
 
-  sleep 1  # Sleep for 1 second before the next check
+  sleep 1  
 done
