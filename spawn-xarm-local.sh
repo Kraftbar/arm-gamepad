@@ -1,7 +1,7 @@
 #!/bin/bash
 # Add this script to ~/.profile with an "&"
 
-command_to_spawn="python3 xarm_control.py"
+command_to_spawn="python3 xarm-local.py"
 
 check_and_spawn_command() {
   if [ -e "/dev/input/js0" ]; then
