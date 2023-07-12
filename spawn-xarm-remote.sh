@@ -1,7 +1,6 @@
 #!/bin/bash
-# Add this script to ~/.profile with an "&"
 
-command_to_spawn="python3 xarm-remote.py"
+command_to_spawn="python3 ~/arm-gamepad/xarm-remote.py"
 
 
 while true; do
@@ -11,7 +10,7 @@ while true; do
     pid=$(pgrep -f "$command_to_spawn")
     # Check if it has crashed
     if [ -z "$pid" ]; then
-      $command_to_spawn
+      eval "$command_to_spawn"
     fi
 
   else
