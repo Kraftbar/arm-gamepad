@@ -1,5 +1,16 @@
 # arm-gamepad
 
-joystick_reader.py -  is remotely executed              
-PI_controller_spawn.sh - sits on the remote RPI to make sure joystick_reader.py is ran once the controller is connected                          
-xarm_control.py - executed on the RPI          
+```sh
+git clone https://github.com/Kraftbar/arm-gamepad
+echo "~/arm-gamepad/spawn-xarm-local.sh &" >> ~/.bashrc
+# Reload the bash profile
+source ~/.bashrc
+```
+
+
+```sh
+git clone https://github.com/Kraftbar/arm-gamepad
+echo "~/arm-gamepad/spawn-xarm-remote.sh &" >> ~/.bashrc
+# Reload the bash profile
+source ~/.bashrc
+```
