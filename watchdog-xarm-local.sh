@@ -17,7 +17,7 @@ function check_xarm_ps_running(){
   echo "$nc_pid"
 }
 
-
+#test 
 
 # spawing and getting the parent prosses, so we can kill both
 
@@ -37,7 +37,7 @@ while true; do
   if [[ ! "$arm_status" =~ $pattern && -n "$arm_ps" ]]; then
     echo $arm_ps
     kill $arm_ps
-    echo "it is up and    ps -> kill and start agian"
+    echo "it is not up and   ps -> kill"
   fi
 
 
