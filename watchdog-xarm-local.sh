@@ -28,16 +28,15 @@ while true; do
   arm_status=$(check_xarm_status)
   arm_ps=$(check_xarm_ps_running)
   # if it is up and no ps -> start
-  if [[ "$arm_status" =~ $pattern && -z "$arm_ps" ]]; then
+  if [[  "$arm_status" =~ $pattern && -z "$arm_ps" ]]; then
     start_xarm
     echo "it is up and no ps -> start"
   fi
-  # if it is up and    ps -> kill and start agian
+  # if it is not up and   ps -> kill 
   echo "--" $arm_ps "--"
-  if [[ "$arm_status" =~ $pattern && -n "$arm_ps" ]]; then
+  if [[ ! "$arm_status" =~ $pattern && -n "$arm_ps" ]]; then
     echo $arm_ps
     kill $arm_ps
-    start_xarm
     echo "it is up and    ps -> kill and start agian"
   fi
 
