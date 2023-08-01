@@ -30,11 +30,13 @@ while true; do
   # if it is up and no ps -> start
   if [[ "$arm_status" =~ $pattern && -z "$arm_ps" ]]; then
     start_xarm
+    echo "it is up and no ps -> start"
   fi
   # if it is up and    ps -> kill and start agian
   if [[ "$arm_status" =~ $pattern && -n "$arm_ps" ]]; then
     kill $arm_ps
     start_xarm
+    echo "it is up and    ps -> kill and start agian"
   fi
 
 
