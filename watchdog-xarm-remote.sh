@@ -1,21 +1,20 @@
 #!/bin/bash
+# TODO: check if eval is blocking
+# TODO:   
 
-command_to_spawn="python3 ~/arm-gamepad/xarm-remote.py"
-
+command_to_spawn1="python3 ~/arm-gamepad/xarm-remote.py"
+function start_xarm() {
+      eval "$command_to_spawn1"
+}
+function check_xarm_ps_running(){
+  nc_pid=$(pgrep -f "$command_to_spawn1")
+  echo "$nc_pid"
+}
 
 while true; do
-  # Check if controller is plugged
-  if [ -e "/dev/input/js0" ]; then
-
-    pid=$(pgrep -f "$command_to_spawn")
-    # Check if it has crashed
-    if [ -z "$pid" ]; then
-      eval "$command_to_spawn"
-    fi
-
-  else
-    echo "Device '/dev/input/js0' not found. Terminating script..."
-
+  arm_ps=$(check_xarm_ps_running)
+  if [ -e "/dev/input/js0" &&  -z "$arm_ps"]; then
+    start_xarm
   fi
 
   sleep 1
