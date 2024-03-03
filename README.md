@@ -7,17 +7,14 @@ echo "~/arm-gamepad/watchdog-xarm-local.sh &" >> ~/.bashrc
 # Reload the bash profile
 source ~/.bashrc
 cd gamepad
-```
 
 
-```sh
 cd
 git clone https://github.com/Kraftbar/arm-gamepad
 echo "~/arm-gamepad/watchdog-xarm-remote.sh &" >> ~/.bashrc
 # Reload the bash profile
 source ~/.bashrc
 cd gamepad
-```
 
 
 go build -o gotest/getstate gotest/getstate.go && ./gotest/getstate
@@ -61,3 +58,4 @@ nohup sh -c "nc -l -u -k 12345 | python3 ~/arm-gamepad/xarm-local.py " &>/dev/nu
 pstree -p  | grep -C10 "sh"
 
 
+```
