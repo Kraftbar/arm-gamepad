@@ -16,6 +16,8 @@ echo "~/arm-gamepad/watchdog-xarm-remote.sh &" >> ~/.bashrc
 source ~/.bashrc
 cd gamepad
 
+```
+```sh
 
 go build -o gotest/getstate gotest/getstate.go && ./gotest/getstate
 
