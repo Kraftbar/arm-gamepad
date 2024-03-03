@@ -2,7 +2,7 @@ import socket
 from inputs import get_gamepad
 import time
 
-IP = '89.9.145.182' 
+IP = '127.0.0.1' 
 PORT = 12345
 scale = 700
 val = 12
