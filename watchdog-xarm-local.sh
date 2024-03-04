@@ -45,7 +45,12 @@ while true; do
   sleep 1  
 done
 
+# Motion state setting (SET)
+# 3: Suspend the current motion
+# 4: Stop all current motion (restart the system)
+# 0: Enter the motion mode
 
+Get the motion state (GET)
 # 1:In motion
 # 2:Sleep
 # 3:Suspend
