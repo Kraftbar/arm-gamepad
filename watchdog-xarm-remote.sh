@@ -13,7 +13,8 @@ function check_xarm_ps_running(){
 
 while true; do
   arm_ps=$(check_xarm_ps_running)
-  if [ -e "/dev/input/js0" &&  -z "$arm_ps"]; then
+  if [ -e "/dev/input/js0" ] && [ -z "$arm_ps" ]; then
+
     start_xarm
   fi
 
