@@ -61,3 +61,73 @@ pstree -p  | grep -C10 "sh"
 
 
 ```
+
+### Testing, sending drawing data over http
+```sh
+
+import asyncio
+import websockets
+
+async def echo(websocket, path):
+    async for message in websocket:
+        print(f"Received message: {message}")
+        await websocket.send(f"Echo: {message}")
+
+start_server = websockets.serve(echo, "localhost", 8765)
+
+asyncio.get_event_loop().run_until_complete(start_server)
+asyncio.get_event_loop().run_forever()
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>WebSocket Drawing</title>
+    <style>
+        /* Simple styling for the drawing canvas */
+        #drawingCanvas {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="drawingCanvas" width="500" height="500"></canvas>
+
+    <script>
+        var canvas = document.getElementById("drawingCanvas");
+        var context = canvas.getContext("2d");
+        var ws = new WebSocket("ws://localhost:8765");
+        var drawing = false;
+
+        function startDrawing(event) {
+            drawing = true;
+            draw(event); // This ensures a dot is drawn when the mouse is clicked but not moved
+        }
+
+        function draw(event) {
+            if (!drawing) return;
+
+            var x = event.offsetX;
+            var y = event.offsetY;
+
+            context.fillRect(x, y, 2, 2); // Draw a small square
+
+            var message = JSON.stringify({x: x, y: y});
+            ws.send(message); // Send coordinates as a JSON string
+        }
+
+        function stopDrawing() {
+            drawing = false;
+        }
+
+        canvas.addEventListener("mousedown", startDrawing);
+        canvas.addEventListener("mousemove", draw);
+        canvas.addEventListener("mouseup", stopDrawing);
+        canvas.addEventListener("mouseout", stopDrawing);
+    </script>
+</body>
+</html>
+```
+
