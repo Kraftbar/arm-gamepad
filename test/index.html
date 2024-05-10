@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<canvas id="drawCanvas" width="400" height="400" style="border:1px solid #000000;"></canvas>
+
+<script>
+// Setup canvas
+var canvas = document.getElementById('drawCanvas');
+var context = canvas.getContext('2d');
+let isDrawing = false;
+
+canvas.addEventListener('mousedown', startDrawing);
+canvas.addEventListener('mousemove', draw);
+canvas.addEventListener('mouseup', stopDrawing);
+
+function startDrawing(e) {
+    isDrawing = true;
+    draw(e); // This ensures the dot is drawn when you click
+}
+
+function draw(e) {
+    if (!isDrawing) return;
+    var x = e.offsetX;
+    var y = e.offsetY;
+    context.fillRect(x, y, 2, 2); // Draw a dot
+
+    // Send the coordinates to localhost
+    fetch('http://192.168.0.52:12355', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ x, y }),
+    }).catch(error => console.log('Error:', error));
+}
+
+function stopDrawing() {
+    isDrawing = false;
+}
+
+</script>
+
+</body>
+</html>
