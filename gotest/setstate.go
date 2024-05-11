@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	host := "192.168.1.158"
+	host := "10.131.29.47"
 	port := 502
 	data := []byte{0x00, 0x01,
 				   0x00, 0x02, 

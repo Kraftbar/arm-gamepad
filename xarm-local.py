@@ -18,7 +18,7 @@ from collections import deque
 toggleGripper_finished = True
 
 def init():
-    arm = XArmAPI('192.168.1.158')
+    arm = XArmAPI('10.131.29.47')
     print(arm.get_state())
     arm.motion_enable(enable=True)
     arm.set_mode(4)
